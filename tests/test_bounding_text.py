@@ -1,7 +1,6 @@
 import cv2
 import sys
 import numpy as np
-sys.path.append(sys.path[0][:(sys.path[0].rfind("/"))])
 from opencv_utilities import bounding_rect
 
 
