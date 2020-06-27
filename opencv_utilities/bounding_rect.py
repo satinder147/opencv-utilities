@@ -18,6 +18,9 @@ def check(scale, text, font, line_width, box_width, box_height, offset, p=1):
         word_width, word_height = cv2.getTextSize(text[prev_line_break:i+1], font, scale, line_width)[0]
         if word_width > box_width:
             i = last_word
+            # print("The text is "+text[prev_line_break:last_word],prev_line_break,last_word)
+            if text[prev_line_break:last_word] == " " or last_word+1 == prev_line_break:
+                return False
             strings.append(text[prev_line_break:last_word])
             prev_line_break = last_word+1
     strings.append(text[prev_line_break:len(text)])
@@ -57,12 +60,13 @@ def get_image(x, y, box_width, box_height, image, text, pad_percent_height, pad_
     padding_width = int(pad_percent_width * box_width)
     box_width -= int(2*box_width*pad_percent_width)
     box_height -= int(2*box_height*pad_percent_height)
-    offset = int(box_height/15)
+    offset = int(box_height/10)
+    # print(box_width,box_height)
     ans = get_scale(text, font, line_width, box_width, box_height, offset)
     p = cv2.getTextSize(text, font, ans, line_width)
     x1 = x + padding_width
     y1 = y+p[0][1]+padding
-    strings = check(ans, text, font, line_width, box_width, box_height, box_height/15, p=2)
+    strings = check(ans, text, font, line_width, box_width, box_height, offset, p=2)
 
     for i in range(len(strings)):
         if align == 'left':
