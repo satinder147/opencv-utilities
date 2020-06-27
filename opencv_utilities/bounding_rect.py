@@ -19,8 +19,8 @@ def check(scale, text, font, line_width, box_width, box_height, offset, p=1):
         if word_width > box_width:
             i = last_word
             # print("The text is "+text[prev_line_break:last_word],prev_line_break,last_word)
-            # if text[prev_line_break:last_word] == " " or last_word+1 == prev_line_break:
-            #     return False
+            if text[prev_line_break:last_word] == " " or last_word+1 == prev_line_break:
+                return False
             strings.append(text[prev_line_break:last_word])
             prev_line_break = last_word+1
     strings.append(text[prev_line_break:len(text)])
